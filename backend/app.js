@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
-const port = 3100
+const port = 3100;
 const dotenv = require('dotenv');
 
 const AppError = require("./utils/appError");

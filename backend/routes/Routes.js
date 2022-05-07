@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const  pool  =  require('./database');
 
+
+
 /* Envio de datos personales del usuario */
 router.post("/addUser", async(req,res) =>{
   try {
@@ -22,10 +24,12 @@ router.post("/addUser", async(req,res) =>{
 
 
 /* get de preguntas con respuestas */
-router.get("/getQuest", async(req,res) => {
+router.get("/getQuestion", async(req,res) => {
   try { 
+      console.log("hola");
       pool.query(`select * from question`)
       .then(result => {
+        console.log("hola", result.rows);
           res.status(200).json({
               data: result.rows
           })

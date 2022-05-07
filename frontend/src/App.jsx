@@ -1,19 +1,12 @@
 import React, { Suspense } from "react";
-import { Provider } from "react-redux";
-import { Router  } from "react-router-dom";
-import AppContext from "./appContext";
-
-import routes from "./RootRoutes";
+import { Router , Route } from "react-router-dom";
+import Main from "./view/Main";
 
 function App() {
   return (
-    <AppContext.Provider value={{ routes }}>
-      <Provider >
-          
-            <Router>{<Main></Main>}</Router>
-         
-      </Provider>
-    </AppContext.Provider>
+      <Router>
+         <Route path='/Main' element={<Main/>} />
+      </Router>
   );
 }
 

@@ -1,7 +1,7 @@
 const Pool = require('pg').Pool
 const db = require('./keys')
-
-
+const express = require('express');
+const router = express.Router();
 const pool = new Pool(db.database);
 
 pool.connect((err, client, release) => {
@@ -17,5 +17,7 @@ pool.connect((err, client, release) => {
     console.log('Database Connected');
   })
 })
+
+
 
 module.exports = pool;
