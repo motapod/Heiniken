@@ -39,7 +39,6 @@ class Main extends Component {
           });
     }
     handleChange(arg){
-        console.log("arg", arg)
         this.setState({
             press: true
         });
@@ -69,7 +68,6 @@ class Main extends Component {
 
 
     handleNext = (arg) => {
-        console.log(arg)
         if (arg == -1) {
             var datos = [];
             var element = (
@@ -257,7 +255,7 @@ class Main extends Component {
                             </button>
                         </div>
                         <div style={{ marginTop: '40px', marginLeft: '13vh' }}>
-                            <button style={{ width: '140px', backgroundColor: '#007743', height: '60px', color: 'white' }} value={actual==5? 7 : 6} onClick={e => this.handleNext(e.target.value)}>
+                            <button style={{ width: '140px', backgroundColor: '#007743', height: '60px', color: 'white' }} value={actual== 5 ? 7 : 6} onClick={e => this.handleNext(actual== 5 ? 7 : 6)}>
                                 <text style={{ fontFamily: 'Futura Bold Condensed BT', color: 'white' , fontSize: 24 }}>Siguiente</text>
                             </button>
                         </div>
@@ -276,18 +274,18 @@ class Main extends Component {
                             <text style={{ fontFamily: 'Futura Medium Condensed BT', color: 'white', fontSize: 24, textAlign: 'center' }}>{this.state.questions[actual].quest} </text>
                         </div>
                         <div style={{ marginTop: '10px'}}>
-                            <button style={{ width: '200px', height: '50px',  marginLeft: '-4vh' }} value={6} onClick={e => this.handleNext(e.target.value)}>
+                            <button style={{ width: '200px', height: '50px',  marginLeft: '-4vh' }} value={1} onClick={e => this.handleRespond(e.target.value)}>
                                 <text style={{ fontFamily: 'Futura Bold Condensed BT', color: '#007743', fontSize: 20 }}>{this.state.questions[actual].option_a} </text>
                             </button>
-                            <button style={{ width: '200px', height: '50px',  color: '#007743', marginLeft: '6vh'  }} value={6} onClick={e => this.handleNext(e.target.value)}>
+                            <button style={{ width: '200px', height: '50px',  color: '#007743', marginLeft: '6vh'  }} value={2} onClick={e => this.handleRespond(e.target.value)}>
                                 <text style={{ fontFamily: 'Futura Bold Condensed BT', color: '#007743', fontSize: 20 }}>{this.state.questions[actual].option_b}</text>
                             </button>
                         </div>
                         <div style={{ marginTop: '10px'}}>
-                            <button style={{ width: '200px', height: '50px',  color: '#007743', marginLeft: '-4vh'  }} value={6} onClick={e => this.handleNext(e.target.value)}>
+                            <button style={{ width: '200px', height: '50px',  color: '#007743', marginLeft: '-4vh'  }} value={3} onClick={e => this.handleRespond(e.target.value)}>
                                 <text style={{ fontFamily: 'Futura Bold Condensed BT', color: '#007743', fontSize: 20 }}>{this.state.questions[actual].option_c}</text>
                             </button>
-                            <button style={{ width: '200px', height: '50px',  color: '#007743', marginLeft: '6vh'  }} value={6} onClick={e => this.handleNext(e.target.value)}>
+                            <button style={{ width: '200px', height: '50px',  color: '#007743', marginLeft: '6vh'  }} value={4} onClick={e => this.handleRespond(e.target.value)}>
                                 <text style={{ fontFamily: 'Futura Bold Condensed BT', color: '#007743', fontSize: 20 }}>{this.state.questions[actual].option_d}</text>
                             </button>
                         </div>
@@ -324,6 +322,12 @@ class Main extends Component {
             this.setState({
                 data: datos,
             });
+        }else if(arg == 8){
+            var datos = [];
+            
+            this.setState({
+                data: datos,
+            });
         }
         //pasos a seguir, si es false tira el que debe ser mayor
 
@@ -333,7 +337,6 @@ class Main extends Component {
     }
 
     handleForm(arg){
-        console.log("entre")
         fetch(host + "/addUser", {
             method: "POST",
             headers: {
@@ -348,13 +351,12 @@ class Main extends Component {
             .then((response) => response.json())
             .then((json) => {
                 this.setState({
-                    id: json.data[0].id,
+                    id: json.data,
                 });
             })
             this.handleNext(4);
     }
     handleFormQuest(arg){
-        console.log("entre")
         fetch(host + "/addAnswers", {
             method: "POST",
             headers: {
@@ -372,6 +374,14 @@ class Main extends Component {
             })
             this.handleNext(8);
     }
+    handleRespond(arg){
+        var resp = this.state.answers
+        resp.push(arg)
+        this.setState({
+            answers: resp,
+        });
+        this.handleNext(6);
+    }
     componentWillMount() {
         fetch(host + "/getQuestion", {
             method: "GET",
@@ -382,7 +392,6 @@ class Main extends Component {
             .then((response) => response.json())
             .then((json) => {
                 var datos = [];
-                console.log("json", json.data)
                 var element = (
 
                     <div style={{ alignContent: 'end', marginTop: '70vh', marginLeft: '10vh', position: 'relative', overflow: 'auto', display: 'inline-block' }}>

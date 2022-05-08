@@ -12,7 +12,6 @@ router.post("/addUser", async(req,res) =>{
       values ($1 , $2, $3) returning id`,
       [req.body.name, req.body.mail, req.body.phone])
       .then(result =>{
-        console.log(result.rows[0].id)
           res.status(200).json({
               data: result.rows[0].id
           })
